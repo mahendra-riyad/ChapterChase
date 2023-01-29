@@ -14,6 +14,8 @@ const productRoutes = require('./routes/product');
 const braintreeRoutes = require('./routes/braintree');
 const orderRoutes = require('./routes/order');
 
+require('./services/cache');
+
 // app
 const app = express();
 
