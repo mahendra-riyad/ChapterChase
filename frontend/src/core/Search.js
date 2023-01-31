@@ -28,7 +28,6 @@ const Search = () => {
     }, []);
 
     const searchData = () => {
-        // console.log(search, category);
         if (search) {
             list({ search: search || undefined, category: category }).then(
                 response => {
@@ -69,7 +68,7 @@ const Search = () => {
 
                 <div className="row">
                     {results.map((product, i) => (
-                        <div className="col-4 mb-3">
+                        <div className="col-4 mb-3" key={i}>
                             <Card key={i} product={product} />
                         </div>
                     ))}

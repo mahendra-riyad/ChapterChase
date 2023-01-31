@@ -62,6 +62,7 @@
 
   .text-container .description {
     display: flex;
+    color: #000;
     justify-content: space-between;
     align-items: center;
   }
