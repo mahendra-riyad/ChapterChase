@@ -5,7 +5,7 @@ import { itemTotal } from "./cartHelpers";
 
 const isActive = (history, path) => {
   if (history.location.pathname === path) {
-    return { color: "#ff9900" };
+    return { color: "#608bd2" };
   } else {
     return { color: "#ffffff" };
   }
@@ -15,7 +15,7 @@ const Menu = ({ history }) => (
   <header className="header-fixed">
     <div className="header-limiter">
       <h1>
-        <Link className="nav-item">
+        <Link to="/" className="nav-item">
           Chapter<span>Chase</span>
         </Link>
       </h1>

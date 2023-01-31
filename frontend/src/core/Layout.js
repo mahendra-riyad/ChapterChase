@@ -1,6 +1,7 @@
 import React from "react";
 import Menu from "./Menu";
-import "../styles.css";
+import "../css/styles.css";
+import "../css/custom.css";
 
 const Layout = ({
     title = "ChapterChase",
