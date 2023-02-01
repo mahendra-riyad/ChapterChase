@@ -64,8 +64,6 @@ exports.create = async (req, res) => {
         product.photo.contentType = files.photo.type;
       }
 
-      req.cacheKey = CONSTANT.CACHE_KEY.PRODUCT;
-
       const result = await product.save();
 
       res.json(result);
@@ -82,9 +80,6 @@ exports.remove = async (req, res) => {
   try {
     let product = req.product;
       await product.remove();
-      
-      req.cacheKey = CONSTANT.CACHE_KEY.PRODUCT
-
     res.json({
       message: "Product deleted successfully",
     });

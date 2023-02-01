@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const { CONSTANT } = require("../common/constant.common");
 
 const {
     create,
@@ -19,13 +20,13 @@ const { userById } = require("../controllers/user");
 const cleanCache = require("../middlewares/cleanCache");
 
 router.get("/product/:productId", read);
-router.post("/product/create/:userId", requireSignin, isAuth, isAdmin, cleanCache, create);
+router.post("/product/create/:userId", requireSignin, isAuth, isAdmin, cleanCache(CONSTANT.CACHE_KEY.PRODUCT), create);
 router.delete(
     "/product/:productId/:userId",
     requireSignin,
     isAuth,
     isAdmin,
-    cleanCache,
+    cleanCache(CONSTANT.CACHE_KEY.PRODUCT),
     remove
 );
 router.put(
@@ -33,6 +34,7 @@ router.put(
     requireSignin,
     isAuth,
     isAdmin,
+    cleanCache(CONSTANT.CACHE_KEY.PRODUCT),
     update
 );
 

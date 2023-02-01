@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import Layout from "./Layout";
 import { read, listRelated } from "./apiCore";
 import Card from "./Card";
+import { API } from "../config";
+import "../css/product.css";
 
 const Product = (props) => {
   const [product, setProduct] = useState({});
@@ -31,6 +33,9 @@ const Product = (props) => {
     loadSingleProduct(productId);
   }, [props]);
 
+  // {product && product.description && (
+  //   <Card product={product} showViewProductButton={false} />
+  // )}
   return (
     <Layout
       title={product && product.name}
@@ -39,19 +44,60 @@ const Product = (props) => {
       }
       className="container-fluid"
     >
-      <div className="row">
-        <div className="col-8">
-          {product && product.description && (
-            <Card product={product} showViewProductButton={false} />
-          )}
+      <div>
+        <div className="card-wrapper">
+          <div className="card">
+            <div className="product-imgs">
+              <div className="img-display">
+                <div className="img-showcase">
+                  <img
+                    src={`${API}/product/photo/${product._id}`} alt=""
+                  />
+                  
+                </div>
+              </div>
+             
+            </div>
+            <div className="product-content">
+              <h2 className="product-title">{product.name}</h2>
+              <div className="product-price">
+                <p className="new-price">
+                  Price: <span>${ product.price}</span>
+                </p>
+              </div>
+
+              <div className="product-detail">
+                <h2>about this item: </h2>
+                <p>
+                  {product.description}
+                </p>
+                <ul>
+                  <li>
+                    Available: <span>in stock</span>
+                  </li>
+                  <li>
+                    Category: <span>{ product.category && product.category.name}</span>
+                  </li>
+                  <li>
+                    Shipping: <span>All over the world</span>
+                  </li>
+                </ul>
+              </div>
+
+              <div className="purchase-info">
+                <input type="number" min="0" value="1" />
+                <button type="button" className="btn">
+                  Add to Cart
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <div className="col-4">
-          <h4>Related products</h4>
+        <h4 className="mt-4 mb-4">Related products</h4>
+        <div className="grid">
           {relatedProduct.map((p, i) => (
-            <div className="mb-3" key={i}>
-              <Card product={p} />
-            </div>
+            <Card key={i} product={p} />
           ))}
         </div>
       </div>

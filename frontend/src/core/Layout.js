@@ -9,7 +9,7 @@ const Layout = ({
     className,
     children
 }) => (
-    <div>
+    <div className="layout">
         <Menu />
         <div className="jumbotron">
             <h2>{title}</h2>

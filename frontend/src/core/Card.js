@@ -127,8 +127,8 @@ const Card = ({
   // );
 
   return (
-    <Link to={`/product/${product._id}`}>
-      <div className="a-box">
+    <Link to={`/product/${product._id}`} className="a-box">
+      <div>
         <div className="img-container">
           <div className="img-inner">
             <div className="inner-skew">
