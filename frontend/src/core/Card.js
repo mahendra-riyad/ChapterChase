@@ -11,6 +11,7 @@ const Card = ({
   showAddToCartButton = true,
   cartUpdate = false,
   showRemoveProductButton = false,
+  showProduct = false,
   setRun = (f) => f,
   run = undefined,
   // changeCartSize
@@ -32,6 +33,8 @@ const Card = ({
   const addToCart = () => {
     // console.log('added');
     addItem(product, setRedirect(true));
+console.log('added');
+return <Redirect to="/cart" />;
   };
 
   const shouldRedirect = (redirect) => {
@@ -102,32 +105,10 @@ const Card = ({
       )
     );
   };
-  // return (
-  //   <div className="card ">
-  //     <div className="card-header card-header-1 ">{product.name}</div>
-  //     <div className="card-body">
-  //       {shouldRedirect(redirect)}
-  //       <ShowImage item={product} url="product" />
-  //       <p className="card-p  mt-2">{product.description.substring(0, 100)} </p>
-  //       <p className="card-p black-10">$ {product.price}</p>
-  //       <p className="black-9">Category: {product.category && product.category.name}</p>
-  //       <p className="black-8">Added on {moment(product.createdAt).fromNow()}</p>
-  //       {showStock(product.quantity)}
-  //       <br />
 
-  //       {showViewButton(showViewProductButton)}
-
-  //       {showAddToCartBtn(showAddToCartButton)}
-
-  //       {showRemoveButton(showRemoveProductButton)}
-
-  //       {showCartUpdateOptions(cartUpdate)}
-  //     </div>
-  //   </div>
-  // );
-
-  return (
-    <Link to={`/product/${product._id}`} className="a-box">
+  const card = () => {
+    return (
+      <div to={`/product/${product._id}`} className="a-box">
       <div>
         <div className="img-container">
           <div className="img-inner">
@@ -140,12 +121,132 @@ const Card = ({
           <h3>{product.name}</h3>
           <div className="description">
             <span>Added on {moment(product.createdAt).fromNow()}</span>
-            <span>{showStock(product.quantity)}</span>
+              <span>{showStock(product.quantity)}</span>
+            </div>
+            <div className="description">
+            {showViewButton(showViewProductButton)}
+
+            {showAddToCartBtn(showAddToCartButton)}
+      
+            {showRemoveButton(showRemoveProductButton)}
+      
+            {showCartUpdateOptions(cartUpdate)}
+            </div>
+        </div>
+      </div>
+    </div>
+    );
+  };
+  // return (
+  //   <div className="card ">
+  //   <div className="card-header card-header-1 ">{product.name}</div>
+  //   <div className="card-body">
+  //     {shouldRedirect(redirect)}
+  //     <ShowImage item={product} url="product" />
+  //     <p className="card-p  mt-2">
+  //       {product.description.substring(0, 100)}{" "}
+  //     </p>
+  //     <p className="card-p black-10">$ {product.price}</p>
+  //     <p className="black-9">
+  //       Category: {product.category && product.category.name}
+  //     </p>
+  //     <p className="black-8">
+  //       Added on {moment(product.createdAt).fromNow()}
+  //     </p>
+  //     {showStock(product.quantity)}
+  //     <br />
+
+  //     {showViewButton(showViewProductButton)}
+
+  //     {showAddToCartBtn(showAddToCartButton)}
+
+  //     {showRemoveButton(showRemoveProductButton)}
+
+  //     {showCartUpdateOptions(cartUpdate)}
+  //   </div>
+  // </div>
+  // );
+
+  // return (
+    // <Link to={`/product/${product._id}`} className="a-box">
+    //   <div>
+    //     <div className="img-container">
+    //       <div className="img-inner">
+    //         <div className="inner-skew">
+    //           <img src={`${API}/product/photo/${product._id}`} alt="" />
+    //         </div>
+    //       </div>
+    //     </div>
+    //     <div className="text-container">
+    //       <h3>{product.name}</h3>
+    //       <div className="description">
+    //         <span>Added on {moment(product.createdAt).fromNow()}</span>
+    //         <span>{showStock(product.quantity)}</span>
+    //       </div>
+    //     </div>
+    //   </div>
+    // </Link>
+  // );
+
+  const productDetails = () => {
+    return (
+      <div className="card-wrapper">
+        <div className="card">
+          <div className="product-imgs">
+            <div className="img-display">
+              <div className="img-showcase">
+                <img src={`${API}/product/photo/${product._id}`} alt="" />
+              </div>
+            </div>
+          </div>
+          <div className="product-content">
+            <h2 className="product-title">{product.name}</h2>
+            <div className="product-price">
+              <p className="new-price">
+                Price: <span>${product.price}</span>
+              </p>
+            </div>
+
+            <div className="product-detail">
+              <h2>about this item: </h2>
+              <p>{product.description}</p>
+              <ul>
+                <li>
+                  Available: <span>{showStock(product.quantity)}</span>
+                </li>
+                <li>
+                  Category:{" "}
+                  <span>{product.category && product.category.name}</span>
+                </li>
+                <li>
+                  Shipping: <span>All over the world</span>
+                </li>
+              </ul>
+            </div>
+
+            <div>
+                {showViewButton(showViewProductButton)}
+          
+                {showAddToCartBtn(showAddToCartButton)}
+          
+                {showRemoveButton(showRemoveProductButton)}
+          
+                {showCartUpdateOptions(cartUpdate)}
+            </div>
           </div>
         </div>
       </div>
-    </Link>
-  );
+    );
+  };
+
+  // <input type="number" min="0" value="1" />
+  //             <button type="button" className="btn">
+  //               Add to Cart
+  //             </button>
+
+  return (<div>
+    {showProduct ? productDetails() : card()}
+  </div>);
 };
 
 export default Card;

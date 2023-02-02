@@ -18,6 +18,7 @@ const Cart = () => {
             <div>
                 <h2>Your cart has {`${items.length}`} items</h2>
                 <hr />
+                <div className='grid'>
                 {items.map((product, i) => (
                     <Card
                         key={i}
@@ -29,6 +30,7 @@ const Cart = () => {
                         run={run}
                     />
                 ))}
+                </div>
             </div>
         );
     };
