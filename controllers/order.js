@@ -73,6 +73,12 @@ exports.updateOrderStatus = (req, res) => {
                 error: errorHandler(err)
             });
         }
+
+        console.log('event emit')
+
+        const eventEmitter = req.app.get('eventEmitter');
+        eventEmitter.emit('updateOrderStatus', {id: req.body.orderId, status: req.body.status});
+
         res.json(order);
     });
 };

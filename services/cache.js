@@ -27,10 +27,8 @@ mongoose.Query.prototype.exec = async function () {
         return await exec.apply(this, arguments);
     }
 
-    // this.getQuery()
-
-    const key = JSON.stringify(Object.assign({}, this._mongooseOptions, this.options, {collection: this.mongooseCollection.name}))
-
+    const key = JSON.stringify(Object.assign({}, this._mongooseOptions, this._conditions, this.options, { collection: this.mongooseCollection.name }))
+    
     const cacheValues = await client.hget(this.hashKey, key);
 
     if (cacheValues) {
