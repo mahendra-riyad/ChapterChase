@@ -60,14 +60,11 @@ const io = require("socket.io")(server, {
 
 io.on("connection", (socket) => {
   socket.on("join", (data) => {
-
-    console.log(`new join ${data}`)
     socket.join(data); // user_userId
   });
 });
 
 eventEmitter.on("updateOrderStatus", (data) => {
-    console.log({eventData: data})
   io.to(`user_${data.user}`).emit("updateOrderStatus", data);
 });
 

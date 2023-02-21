@@ -1,14 +1,14 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useEffect, useRef } from "react";
 import { Link, withRouter } from "react-router-dom";
 import { signout, isAuthenticated } from "../auth";
 import { itemTotal } from "./cartHelpers";
 
+import Notification from "./Notification";
 
-import io from 'socket.io-client';
+import io from "socket.io-client";
 
 let socket;
-const serverUrl = 'http://localhost:5000';
-
+const serverUrl = "http://localhost:5000";
 
 const isActive = (history, path) => {
   if (history.location.pathname === path) {
@@ -19,26 +19,30 @@ const isActive = (history, path) => {
 };
 
 const Menu = ({ history }) => {
-
   const user = isAuthenticated();
+  const ref = useRef();
 
   useEffect(() => {
-
     if (user && user.user && user.user._id) {
       socket = io(serverUrl);
 
-      console.log({user})
+      socket.emit("join", `user_${user.user._id}`);
 
-      socket.emit('join', `user_${user.user._id}`)
-
-      socket.on('updateOrderStatus', (data) => {
-          console.log('data::', data);
+      socket.on("updateOrderStatus", (data) => {
+        console.log("data::", data);
+        ref.current.createNotification(
+          "info",
+          "Order status updated",
+          `You order '${data.products[0].name}' status has been changed to ${data.status}`,
+          5000
+        );
       });
     }
-}, []);
+  },[]);
 
   return (
     <header className="header-fixed">
+      <Notification ref={ref} />
       <div className="header-limiter">
         <h1>
           <Link to="/" className="nav-item">
@@ -141,7 +145,7 @@ const Menu = ({ history }) => {
         </nav>
       </div>
     </header>
-  )
+  );
 };
 
 export default withRouter(Menu);
