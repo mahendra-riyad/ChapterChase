@@ -66,19 +66,21 @@ exports.getStatusValues = (req, res) => {
     res.json(Order.schema.path('status').enumValues);
 };
 
-exports.updateOrderStatus = (req, res) => {
-    Order.update({ _id: req.body.orderId }, { $set: { status: req.body.status } }, (err, order) => {
-        if (err) {
-            return res.status(400).json({
-                error: errorHandler(err)
-            });
-        }
+exports.updateOrderStatus = async (req, res) => {
 
-        console.log('event emit')
+    try {
+        const order = await Order.findOneAndUpdate({ _id: req.body.orderId }, { $set: { status: req.body.status } })
+
+        order.status = req.body.status;
 
         const eventEmitter = req.app.get('eventEmitter');
-        eventEmitter.emit('updateOrderStatus', {id: req.body.orderId, status: req.body.status});
+        eventEmitter.emit('updateOrderStatus', order);
 
         res.json(order);
-    });
+        
+    } catch (error) {
+        return res.status(400).json({
+            error: errorHandler(error)
+        });
+    }    
 };
